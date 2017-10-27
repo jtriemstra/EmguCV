@@ -1,0 +1,3 @@
+C:\TestProjects\EmguCV\HelloWorldConsole\bin\Debug\HelloWorldConsole.exe.config
+C:\TestProjects\EmguCV\HelloWorldConsole\obj\Debug\HelloWorldConsole.exe
+C:\TestProjects\EmguCV\HelloWorldConsole\obj\Debug\HelloWorldConsole.pdb
