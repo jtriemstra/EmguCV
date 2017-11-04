@@ -1,4 +1,6 @@
-﻿using System;
+﻿//http://www.emgu.com/wiki/index.php/Tutorial
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

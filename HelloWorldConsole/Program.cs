@@ -1,4 +1,6 @@
-﻿using System;
+﻿//http://www.emgu.com/wiki/index.php/Tutorial
+
+using System;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -11,6 +13,7 @@ namespace HelloWorldConsole
         static void Main(string[] args)
         {
             //Create a 3 channel image of 400x200
+            //"The equivalent of cv::Mat" 
             using (Mat img = new Mat(200, 400, DepthType.Cv8U, 3))
             {
                 img.SetTo(new Bgr(255, 0, 0).MCvScalar); // set it to Blue color
