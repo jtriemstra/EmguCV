@@ -23,8 +23,7 @@ namespace EMedianBlurNoiseRemoval
         {
             InitializeComponent();
 
-            Mat objSourceImage = new Mat(m_strSourceImageFileName);
-            ImageViewer.Show(objSourceImage, WINDOW_NAME);
+            
         }
 
         private void numAperture_ValueChanged(object sender, EventArgs e)
@@ -35,7 +34,10 @@ namespace EMedianBlurNoiseRemoval
         private void Form1_Load(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Form load event");
-            //TODO: why did image not show in this event?
+
+            Mat objSourceImage = new Mat(m_strSourceImageFileName);
+            //ImageViewer.Show(objSourceImage, WINDOW_NAME);
+            objImageDisplay.Image = objSourceImage.Bitmap;
         }
     }
 }
