@@ -18,26 +18,50 @@ namespace EMedianBlurNoiseRemoval
     {
         private String m_strSourceImageFileName = @"C:\TestProjects\EmguCV\ShapeTest.jpg";
         private const String WINDOW_NAME = "Test Window";
+        private Mat m_objSourceImage;
 
         public Form1()
         {
             InitializeComponent();
 
-            
+            m_objSourceImage = new Mat(m_strSourceImageFileName);
         }
 
         private void numAperture_ValueChanged(object sender, EventArgs e)
         {
+            int intAperture = (int) numAperture.Value;
+            if (intAperture == 0)
+            {
+                DisplayOriginal();
+                return;
+            }
 
+            if (intAperture % 2 == 0)
+            {
+                intAperture += 1;
+            }
+
+            DisplayBlurred(intAperture);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Form load event");
 
-            Mat objSourceImage = new Mat(m_strSourceImageFileName);
             //ImageViewer.Show(objSourceImage, WINDOW_NAME);
-            objImageDisplay.Image = objSourceImage.Bitmap;
+            DisplayOriginal();
+        }
+
+        private void DisplayOriginal()
+        {
+            objImageDisplay.Image = m_objSourceImage.Bitmap;
+        }
+
+        private void DisplayBlurred(int intAperture)
+        {
+            Mat objDestinationImage = new Mat();
+            CvInvoke.MedianBlur(m_objSourceImage, objDestinationImage, intAperture);
+            objImageDisplay.Image = objDestinationImage.Bitmap;
         }
     }
 }
