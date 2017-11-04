@@ -36,6 +36,7 @@ namespace FPyrUpDownNoiseRemoval
                 return;
             }          
 
+            //Compare these two approaches, not sure how OpenCV handles the memory. Conclusion: approaches are equivalent.
             DisplayBlurred(intRepetitions);
             DisplayBlurredExplicitCopy(intRepetitions);
         }

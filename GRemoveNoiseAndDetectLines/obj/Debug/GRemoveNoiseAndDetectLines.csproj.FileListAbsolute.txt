@@ -1,0 +1,1 @@
+C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\bin\Debug\GRemoveNoiseAndDetectLines.exe.config
