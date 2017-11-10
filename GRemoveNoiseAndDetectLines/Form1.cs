@@ -55,7 +55,7 @@ namespace GRemoveNoiseAndDetectLines
             System.Diagnostics.Debug.WriteLine("Form load event");
 
             //ImageViewer.Show(objSourceImage, WINDOW_NAME);
-            UpdateImages();
+            UpdateImagesWrapper();
 
             numSobelAperture.Minimum = -1;
             numSobelAperture.Maximum = 7;
@@ -63,6 +63,89 @@ namespace GRemoveNoiseAndDetectLines
             numSobelAperture.Value = 1;
         }
 
+        private void UpdateImagesWrapper()
+        {
+
+            UpdateImagesLocal();
+        }
+
+        private void UpdateImagesLocal()
+        {
+            using (Mat objBlurredImage = new Mat())
+            {
+                if (m_intBlurAperture % 2 != 0)
+                {
+                    CvInvoke.MedianBlur(m_objSourceImage, objBlurredImage, m_intBlurAperture);
+                    //TODO: this seems to be a memory leak, but also the only way to keep the bitmap around long enough for the form to display
+                    Bitmap x = new Bitmap(objBlurredImage.Bitmap);
+                    objBlurDisplay.Image = x;
+                    
+                    using (Mat objCannyImage = new Mat())
+                    {
+                        double cannyThreshold = 180.0;
+                        double cannyThresholdLinking = 120.0;
+                        CvInvoke.Canny(objBlurredImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
+
+                        objBlurCannyDisplay.Image = objCannyImage.Bitmap;
+                    }
+
+                    using (Mat objSobelEdgeImage = new Mat())
+                    {
+                        int intSobelAperture = (int)numSobelAperture.Value;
+                        CvInvoke.Sobel(objBlurredImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
+
+                        objBlurSobelDisplay.Image = objSobelEdgeImage.Bitmap;
+                    }
+
+                    using (Mat objLaplaceEdgeImage = new Mat())
+                    {
+                        CvInvoke.Laplacian(objBlurredImage, objLaplaceEdgeImage, DepthType.Cv16S);
+                        objBlurLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
+                    }                    
+                }
+            }
+                
+            using (Mat objResampledImage = m_objSourceImage.Clone())
+            {
+                if (m_intPyrRepetitions > 0)
+                {
+                    for (int i = 0; i < m_intPyrRepetitions; i++)
+                    {
+                        CvInvoke.PyrDown(objResampledImage, objResampledImage);
+                    }
+                    for (int i = 0; i < m_intPyrRepetitions; i++)
+                    {
+                        CvInvoke.PyrUp(objResampledImage, objResampledImage);
+                    }
+
+                    Bitmap x = new Bitmap(objResampledImage.Bitmap);
+                    objPyrDisplay.Image = x;
+
+                    using (Mat objCannyImage = new Mat())
+                    {
+                        double cannyThreshold = 180.0;
+                        double cannyThresholdLinking = 120.0;
+                        CvInvoke.Canny(objResampledImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
+
+                        objPyrCannyDisplay.Image = objCannyImage.Bitmap;
+                    }
+
+                    using (Mat objSobelEdgeImage = new Mat())
+                    {
+                        int intSobelAperture = (int)numSobelAperture.Value;
+                        CvInvoke.Sobel(objResampledImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
+
+                        objPyrSobelDisplay.Image = objSobelEdgeImage.Bitmap;
+                    }
+
+                    using (Mat objLaplaceEdgeImage = new Mat())
+                    {
+                        CvInvoke.Laplacian(objResampledImage, objLaplaceEdgeImage, DepthType.Cv16S);
+                        objPyrLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
+                    }
+                }                            
+            }
+        }
 
         private void UpdateImages()
         {
@@ -148,7 +231,7 @@ namespace GRemoveNoiseAndDetectLines
 
         }
 
-        /*Here, src and dst are your image input and output. The argument ddepth allows you to select the depth (type) of the generated output (e.g., CV_32F). As a good example of how to use ddepth, if src is an 8-bit image, then the dst should have a depth of at least CV_16S to avoid overflow. xorder and yorder are the orders of the derivative. Typically, you’ll use 0, 1, or at most 2; a 0 value indicates no derivative in that direction.11 The ksize parameter should be odd and is the width (and the height) of the filter to be used. Currently, aperture sizes up to 31 are supported.12 The scale factor and delta are applied to the derivative before storing in dst. */
+        //Here, src and dst are your image input and output. The argument ddepth allows you to select the depth (type) of the generated output (e.g., CV_32F). As a good example of how to use ddepth, if src is an 8-bit image, then the dst should have a depth of at least CV_16S to avoid overflow. xorder and yorder are the orders of the derivative. Typically, you’ll use 0, 1, or at most 2; a 0 value indicates no derivative in that direction.11 The ksize parameter should be odd and is the width (and the height) of the filter to be used. Currently, aperture sizes up to 31 are supported.12 The scale factor and delta are applied to the derivative before storing in dst. 
         private void DoSobel(int intNoiseRemoveIndex)
         {
             if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
@@ -183,7 +266,7 @@ namespace GRemoveNoiseAndDetectLines
         private void numReptitions_ValueChanged(object sender, EventArgs e)
         {
             m_intPyrRepetitions = (int)numRepetitions.Value;
-            UpdateImages();
+            UpdateImagesWrapper();
         }
 
         private void numAperture_ValueChanged(object sender, EventArgs e)
@@ -195,7 +278,7 @@ namespace GRemoveNoiseAndDetectLines
                 m_intBlurAperture += 1;
             }
 
-            UpdateImages();
+            UpdateImagesWrapper();
         }
 
         private void objBlurCannyDisplay_Click(object sender, EventArgs e)
