@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMedianBlurNoiseRemoval", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FPyrUpDownNoiseRemoval", "FPyrUpDownNoiseRemoval\FPyrUpDownNoiseRemoval.csproj", "{5A60E6CC-6621-4643-8B9C-E81907299BFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GRemoveNoiseAndDetectLines", "GRemoveNoiseAndDetectLines\GRemoveNoiseAndDetectLines.csproj", "{CBCDE746-711B-407B-AB0C-0AA9371D62E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{5A60E6CC-6621-4643-8B9C-E81907299BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A60E6CC-6621-4643-8B9C-E81907299BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A60E6CC-6621-4643-8B9C-E81907299BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBCDE746-711B-407B-AB0C-0AA9371D62E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBCDE746-711B-407B-AB0C-0AA9371D62E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBCDE746-711B-407B-AB0C-0AA9371D62E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBCDE746-711B-407B-AB0C-0AA9371D62E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
