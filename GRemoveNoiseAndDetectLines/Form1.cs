@@ -78,6 +78,7 @@ namespace GRemoveNoiseAndDetectLines
                     CvInvoke.MedianBlur(m_objSourceImage, objBlurredImage, m_intBlurAperture);
                     //TODO: this seems to be a memory leak, but also the only way to keep the bitmap around long enough for the form to display
                     Bitmap x = new Bitmap(objBlurredImage.Bitmap);
+                    if (objBlurDisplay.Image != null) objBlurDisplay.Image.Dispose();
                     objBlurDisplay.Image = x;
                     
                     using (Mat objCannyImage = new Mat())
@@ -86,6 +87,7 @@ namespace GRemoveNoiseAndDetectLines
                         double cannyThresholdLinking = 120.0;
                         CvInvoke.Canny(objBlurredImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
 
+                        if (objBlurCannyDisplay.Image != null) objBlurCannyDisplay.Image.Dispose();
                         objBlurCannyDisplay.Image = objCannyImage.Bitmap;
                     }
 
@@ -94,12 +96,14 @@ namespace GRemoveNoiseAndDetectLines
                         int intSobelAperture = (int)numSobelAperture.Value;
                         CvInvoke.Sobel(objBlurredImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
 
+                        if (objBlurSobelDisplay.Image != null) objBlurSobelDisplay.Image.Dispose();
                         objBlurSobelDisplay.Image = objSobelEdgeImage.Bitmap;
                     }
 
                     using (Mat objLaplaceEdgeImage = new Mat())
                     {
                         CvInvoke.Laplacian(objBlurredImage, objLaplaceEdgeImage, DepthType.Cv16S);
+                        if (objBlurLaplaceDisplay.Image != null) objBlurLaplaceDisplay.Image.Dispose();
                         objBlurLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
                     }                    
                 }
@@ -119,6 +123,7 @@ namespace GRemoveNoiseAndDetectLines
                     }
 
                     Bitmap x = new Bitmap(objResampledImage.Bitmap);
+                    if (objPyrDisplay.Image != null) objPyrDisplay.Image.Dispose();
                     objPyrDisplay.Image = x;
 
                     using (Mat objCannyImage = new Mat())
@@ -127,6 +132,7 @@ namespace GRemoveNoiseAndDetectLines
                         double cannyThresholdLinking = 120.0;
                         CvInvoke.Canny(objResampledImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
 
+                        if (objPyrCannyDisplay.Image != null) objPyrCannyDisplay.Image.Dispose();
                         objPyrCannyDisplay.Image = objCannyImage.Bitmap;
                     }
 
@@ -135,12 +141,14 @@ namespace GRemoveNoiseAndDetectLines
                         int intSobelAperture = (int)numSobelAperture.Value;
                         CvInvoke.Sobel(objResampledImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
 
+                        if (objPyrSobelDisplay.Image != null) objPyrSobelDisplay.Image.Dispose();
                         objPyrSobelDisplay.Image = objSobelEdgeImage.Bitmap;
                     }
 
                     using (Mat objLaplaceEdgeImage = new Mat())
                     {
                         CvInvoke.Laplacian(objResampledImage, objLaplaceEdgeImage, DepthType.Cv16S);
+                        if (objPyrLaplaceDisplay.Image != null) objPyrLaplaceDisplay.Image.Dispose();
                         objPyrLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
                     }
                 }                            
