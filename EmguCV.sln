@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HPictureBoxTest", "HPicture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IEmguImageBox", "IEmguImageBox\IEmguImageBox.csproj", "{80896B42-6FA0-4DFB-BBA3-DFE94F683E53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JChainableTransforms", "JChainableTransforms\JChainableTransforms.csproj", "{9032263F-4A1C-4CED-88B8-AF0E5F8F1C23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAImageViewer", "AAImageViewer\AAImageViewer.csproj", "{6726845D-1921-4D3B-A63B-3DA7A2266BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,14 @@ Global
 		{80896B42-6FA0-4DFB-BBA3-DFE94F683E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80896B42-6FA0-4DFB-BBA3-DFE94F683E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80896B42-6FA0-4DFB-BBA3-DFE94F683E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9032263F-4A1C-4CED-88B8-AF0E5F8F1C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9032263F-4A1C-4CED-88B8-AF0E5F8F1C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9032263F-4A1C-4CED-88B8-AF0E5F8F1C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9032263F-4A1C-4CED-88B8-AF0E5F8F1C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

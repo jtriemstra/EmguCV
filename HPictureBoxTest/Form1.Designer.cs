@@ -39,6 +39,7 @@
             this.objLargeEmguDisplay = new System.Windows.Forms.PictureBox();
             this.objMemoryLeakDisplay = new System.Windows.Forms.PictureBox();
             this.objLargeRawDisplay = new System.Windows.Forms.PictureBox();
+            this.objTinyDisplay = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.objRawDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objEmguDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objButtonEmguDisplay)).BeginInit();
@@ -48,6 +49,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.objLargeEmguDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objMemoryLeakDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objLargeRawDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objTinyDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // objRawDisplay
@@ -146,11 +148,22 @@
             this.objLargeRawDisplay.TabIndex = 10;
             this.objLargeRawDisplay.TabStop = false;
             // 
+            // objTinyDisplay
+            // 
+            this.objTinyDisplay.Location = new System.Drawing.Point(1163, 599);
+            this.objTinyDisplay.Name = "objTinyDisplay";
+            this.objTinyDisplay.Size = new System.Drawing.Size(47, 45);
+            this.objTinyDisplay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.objTinyDisplay.TabIndex = 11;
+            this.objTinyDisplay.TabStop = false;
+            this.objTinyDisplay.Click += new System.EventHandler(this.objTinyDisplay_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1417, 791);
+            this.Controls.Add(this.objTinyDisplay);
             this.Controls.Add(this.objLargeRawDisplay);
             this.Controls.Add(this.objMemoryLeakDisplay);
             this.Controls.Add(this.objLargeEmguDisplay);
@@ -174,6 +187,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.objLargeEmguDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objMemoryLeakDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objLargeRawDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objTinyDisplay)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -191,6 +205,7 @@
         private System.Windows.Forms.PictureBox objLargeEmguDisplay;
         private System.Windows.Forms.PictureBox objMemoryLeakDisplay;
         private System.Windows.Forms.PictureBox objLargeRawDisplay;
+        private System.Windows.Forms.PictureBox objTinyDisplay;
     }
 }
 

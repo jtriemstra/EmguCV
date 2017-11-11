@@ -35,3 +35,5 @@ C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.Properties.Reso
 C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.csproj.GenerateResource.Cache
 C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.exe
 C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.pdb
+C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.csprojResolveAssemblyReference.cache
+C:\TestProjects\EmguCV\HPictureBoxTest\obj\Debug\HPictureBoxTest.DetailView.resources

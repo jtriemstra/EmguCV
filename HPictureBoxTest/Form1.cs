@@ -52,6 +52,9 @@ namespace HPictureBoxTest
             {
                 objLargeRawDisplay.Image = objSourceImage;
             }
+
+            objTinyDisplay.Image = Image.FromFile(m_strLargeImageFileName);
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,6 +87,12 @@ namespace HPictureBoxTest
                     objNumBlurDisplay.Image = objBlurredImage.Bitmap;
                 }
             }
+        }
+
+        private void objTinyDisplay_Click(object sender, EventArgs e)
+        {
+            DetailView objDetail = new DetailView(objTinyDisplay.Image);
+            objDetail.Show();
         }
     }
 }

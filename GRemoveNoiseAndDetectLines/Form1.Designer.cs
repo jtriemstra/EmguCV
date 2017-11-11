@@ -44,6 +44,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnShowHough = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numAperture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRepetitions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objBlurDisplay)).BeginInit();
@@ -203,11 +204,22 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "Resample";
             // 
+            // btnShowHough
+            // 
+            this.btnShowHough.Location = new System.Drawing.Point(425, 392);
+            this.btnShowHough.Name = "btnShowHough";
+            this.btnShowHough.Size = new System.Drawing.Size(75, 23);
+            this.btnShowHough.TabIndex = 17;
+            this.btnShowHough.Text = "Hough";
+            this.btnShowHough.UseVisualStyleBackColor = true;
+            this.btnShowHough.Click += new System.EventHandler(this.btnShowHough_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1822, 813);
+            this.Controls.Add(this.btnShowHough);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -261,6 +273,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnShowHough;
     }
 }
 

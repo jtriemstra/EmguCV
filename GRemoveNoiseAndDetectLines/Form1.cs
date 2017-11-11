@@ -225,5 +225,12 @@ namespace GRemoveNoiseAndDetectLines
             DetailView objDetail = new DetailView(objPyrLaplaceDisplay.Image);
             objDetail.Show();
         }
+
+
+        private void btnShowHough_Click(object sender, EventArgs e)
+        {
+            HoughView objLines = new HoughView(objBlurCannyDisplay.Image);
+            objLines.Show();
+        }
     }
 }
