@@ -39,6 +39,11 @@
             this.objPyrSobelDisplay = new System.Windows.Forms.PictureBox();
             this.objPyrCannyDisplay = new System.Windows.Forms.PictureBox();
             this.numSobelAperture = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAperture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRepetitions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objBlurDisplay)).BeginInit();
@@ -148,16 +153,66 @@
             // 
             // numSobelAperture
             // 
-            this.numSobelAperture.Location = new System.Drawing.Point(819, 47);
+            this.numSobelAperture.Location = new System.Drawing.Point(881, 49);
             this.numSobelAperture.Name = "numSobelAperture";
             this.numSobelAperture.Size = new System.Drawing.Size(120, 20);
             this.numSobelAperture.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 133);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Blur";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(435, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Canny";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(903, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Sobel";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1387, 23);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Laplace";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 483);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Resample";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1822, 813);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.numSobelAperture);
             this.Controls.Add(this.objPyrLaplaceDisplay);
             this.Controls.Add(this.objPyrSobelDisplay);
@@ -184,6 +239,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.objPyrCannyDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSobelAperture)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -200,6 +256,11 @@
         private System.Windows.Forms.PictureBox objPyrSobelDisplay;
         private System.Windows.Forms.PictureBox objPyrCannyDisplay;
         private System.Windows.Forms.NumericUpDown numSobelAperture;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

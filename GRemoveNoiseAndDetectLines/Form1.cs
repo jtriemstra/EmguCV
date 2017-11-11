@@ -83,28 +83,17 @@ namespace GRemoveNoiseAndDetectLines
                     
                     using (Mat objCannyImage = new Mat())
                     {
-                        double cannyThreshold = 180.0;
-                        double cannyThresholdLinking = 120.0;
-                        CvInvoke.Canny(objBlurredImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
-
-                        if (objBlurCannyDisplay.Image != null) objBlurCannyDisplay.Image.Dispose();
-                        objBlurCannyDisplay.Image = objCannyImage.Bitmap;
+                        DoCanny(objBlurredImage, objCannyImage, objBlurCannyDisplay);
                     }
 
                     using (Mat objSobelEdgeImage = new Mat())
                     {
-                        int intSobelAperture = (int)numSobelAperture.Value;
-                        CvInvoke.Sobel(objBlurredImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
-
-                        if (objBlurSobelDisplay.Image != null) objBlurSobelDisplay.Image.Dispose();
-                        objBlurSobelDisplay.Image = objSobelEdgeImage.Bitmap;
+                        DoSobel(objBlurredImage, objSobelEdgeImage, objBlurSobelDisplay);
                     }
 
                     using (Mat objLaplaceEdgeImage = new Mat())
                     {
-                        CvInvoke.Laplacian(objBlurredImage, objLaplaceEdgeImage, DepthType.Cv16S);
-                        if (objBlurLaplaceDisplay.Image != null) objBlurLaplaceDisplay.Image.Dispose();
-                        objBlurLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
+                        DoLaplace(objBlurredImage, objLaplaceEdgeImage, objBlurLaplaceDisplay);
                     }                    
                 }
             }
@@ -128,29 +117,18 @@ namespace GRemoveNoiseAndDetectLines
 
                     using (Mat objCannyImage = new Mat())
                     {
-                        double cannyThreshold = 180.0;
-                        double cannyThresholdLinking = 120.0;
-                        CvInvoke.Canny(objResampledImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
-
-                        if (objPyrCannyDisplay.Image != null) objPyrCannyDisplay.Image.Dispose();
-                        objPyrCannyDisplay.Image = objCannyImage.Bitmap;
+                        DoCanny(objResampledImage, objCannyImage, objPyrCannyDisplay);
                     }
 
                     using (Mat objSobelEdgeImage = new Mat())
                     {
-                        int intSobelAperture = (int)numSobelAperture.Value;
-                        CvInvoke.Sobel(objResampledImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
-
-                        if (objPyrSobelDisplay.Image != null) objPyrSobelDisplay.Image.Dispose();
-                        objPyrSobelDisplay.Image = objSobelEdgeImage.Bitmap;
+                        DoSobel(objResampledImage, objSobelEdgeImage, objPyrSobelDisplay);
                     }
 
                     using (Mat objLaplaceEdgeImage = new Mat())
                     {
-                        CvInvoke.Laplacian(objResampledImage, objLaplaceEdgeImage, DepthType.Cv16S);
-                        if (objPyrLaplaceDisplay.Image != null) objPyrLaplaceDisplay.Image.Dispose();
-                        objPyrLaplaceDisplay.Image = objLaplaceEdgeImage.Bitmap;
-                    }
+                        DoLaplace(objResampledImage, objLaplaceEdgeImage, objPyrLaplaceDisplay);
+                    }         
                 }                            
             }
         }
@@ -219,55 +197,43 @@ namespace GRemoveNoiseAndDetectLines
         {
             if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
 
-            DoCanny(intNoiseRemoveIndex);
-            DoSobel(intNoiseRemoveIndex);
-            DoLaplace(intNoiseRemoveIndex);
+            //DoCanny(intNoiseRemoveIndex);
+            //DoSobel(intNoiseRemoveIndex);
+            //DoLaplace(intNoiseRemoveIndex);
         }
 
-        private void DoCanny(int intNoiseRemoveIndex)
+        private void DoCanny(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
         {
-            if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
-
-            Mat objCannyEdgeImage = new Mat();
             double cannyThreshold = 180.0;
             double cannyThresholdLinking = 120.0;
-            CvInvoke.Canny(m_objProcessedImages[intNoiseRemoveIndex, 0], objCannyEdgeImage, cannyThreshold, cannyThresholdLinking);
+            CvInvoke.Canny(objSourceImage, objResultImage, cannyThreshold, cannyThresholdLinking);
 
-            //m_objProcessedImages[intNoiseRemoveIndex, CANNY] = objCannyEdgeImage;
-            m_objPictureBoxes[intNoiseRemoveIndex, CANNY].Image = objCannyEdgeImage.Bitmap;
-            objCannyEdgeImage.Dispose();
-
+            if (objOutput.Image != null) objOutput.Image.Dispose();
+            objOutput.Image = objResultImage.Bitmap;
         }
 
         //Here, src and dst are your image input and output. The argument ddepth allows you to select the depth (type) of the generated output (e.g., CV_32F). As a good example of how to use ddepth, if src is an 8-bit image, then the dst should have a depth of at least CV_16S to avoid overflow. xorder and yorder are the orders of the derivative. Typically, you’ll use 0, 1, or at most 2; a 0 value indicates no derivative in that direction.11 The ksize parameter should be odd and is the width (and the height) of the filter to be used. Currently, aperture sizes up to 31 are supported.12 The scale factor and delta are applied to the derivative before storing in dst. 
-        private void DoSobel(int intNoiseRemoveIndex)
+        private void DoSobel(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
         {
-            if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
-
             int intSobelAperture = (int) numSobelAperture.Value;
             
-            Mat objSobelEdgeImage = new Mat();
             //TODO: x, y > 0 ignores horizontal/vertical lines, but setting both to 0 throws exception. Why?
             //TODO: why would I use different x, y here? If I know/expect something about the image?
             //NOTE: looks like Scharr only works with x,y == 0,1 or 1,0
 
-            CvInvoke.Sobel(m_objProcessedImages[intNoiseRemoveIndex, 0], objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
+            CvInvoke.Sobel(objSourceImage, objResultImage, DepthType.Cv16S, 1, 0, intSobelAperture);
 
-            //m_objProcessedImages[intNoiseRemoveIndex, SOBEL] = objSobelEdgeImage;
-            m_objPictureBoxes[intNoiseRemoveIndex, SOBEL].Image = objSobelEdgeImage.Bitmap;
-            objSobelEdgeImage.Dispose();
+            if (objOutput.Image != null) objOutput.Image.Dispose();
+            objOutput.Image = objResultImage.Bitmap;
+            
         }
 
-        private void DoLaplace(int intNoiseRemoveIndex)
+        private void DoLaplace(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
         {
-            if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
+            CvInvoke.Laplacian(objSourceImage, objResultImage, DepthType.Cv16S);
 
-            Mat objLaplaceEdgeImage = new Mat();
-            CvInvoke.Laplacian(m_objProcessedImages[intNoiseRemoveIndex, 0], objLaplaceEdgeImage, DepthType.Cv16S);
-
-            //m_objProcessedImages[intNoiseRemoveIndex, LAPLACE] = objLaplaceEdgeImage;
-            m_objPictureBoxes[intNoiseRemoveIndex, LAPLACE].Image = objLaplaceEdgeImage.Bitmap;
-            objLaplaceEdgeImage.Dispose();
+            if (objOutput.Image != null) objOutput.Image.Dispose();
+            objOutput.Image = objResultImage.Bitmap;
         }
 
 
