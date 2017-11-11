@@ -65,40 +65,36 @@ namespace GRemoveNoiseAndDetectLines
 
         private void UpdateImagesWrapper()
         {
-
-            UpdateImagesLocal();
+            UpdateImages();
         }
 
-        private void UpdateImagesLocal()
+        private void UpdateImages()
+        {
+            DoBlur(m_objSourceImage, objBlurDisplay);
+            DoPyr(m_objSourceImage, objPyrDisplay);                     
+        }
+        
+        private void DoBlur(Mat objSourceImage, PictureBox objOutput)
         {
             using (Mat objBlurredImage = new Mat())
             {
                 if (m_intBlurAperture % 2 != 0)
                 {
-                    CvInvoke.MedianBlur(m_objSourceImage, objBlurredImage, m_intBlurAperture);
-                    //TODO: this seems to be a memory leak, but also the only way to keep the bitmap around long enough for the form to display
+                    CvInvoke.MedianBlur(objSourceImage, objBlurredImage, m_intBlurAperture);
+
+                    //TODO: this is funky, but if I don't keep a reference to the Bitmap, the picturebox doesn't populate, at least for large images. See the HPictureBox project.
                     Bitmap x = new Bitmap(objBlurredImage.Bitmap);
-                    if (objBlurDisplay.Image != null) objBlurDisplay.Image.Dispose();
-                    objBlurDisplay.Image = x;
-                    
-                    using (Mat objCannyImage = new Mat())
-                    {
-                        DoCanny(objBlurredImage, objCannyImage, objBlurCannyDisplay);
-                    }
+                    if (objOutput.Image != null) objOutput.Image.Dispose();
+                    objOutput.Image = x;
 
-                    using (Mat objSobelEdgeImage = new Mat())
-                    {
-                        DoSobel(objBlurredImage, objSobelEdgeImage, objBlurSobelDisplay);
-                    }
-
-                    using (Mat objLaplaceEdgeImage = new Mat())
-                    {
-                        DoLaplace(objBlurredImage, objLaplaceEdgeImage, objBlurLaplaceDisplay);
-                    }                    
+                    FindEdges(objBlurredImage, BLUR);
                 }
             }
-                
-            using (Mat objResampledImage = m_objSourceImage.Clone())
+        }
+
+        private void DoPyr(Mat objSourceImage, PictureBox objOutput)
+        {
+            using (Mat objResampledImage = objSourceImage.Clone())
             {
                 if (m_intPyrRepetitions > 0)
                 {
@@ -112,128 +108,61 @@ namespace GRemoveNoiseAndDetectLines
                     }
 
                     Bitmap x = new Bitmap(objResampledImage.Bitmap);
-                    if (objPyrDisplay.Image != null) objPyrDisplay.Image.Dispose();
-                    objPyrDisplay.Image = x;
+                    if (objOutput.Image != null) objOutput.Image.Dispose();
+                    objOutput.Image = x;
 
-                    using (Mat objCannyImage = new Mat())
-                    {
-                        DoCanny(objResampledImage, objCannyImage, objPyrCannyDisplay);
-                    }
-
-                    using (Mat objSobelEdgeImage = new Mat())
-                    {
-                        DoSobel(objResampledImage, objSobelEdgeImage, objPyrSobelDisplay);
-                    }
-
-                    using (Mat objLaplaceEdgeImage = new Mat())
-                    {
-                        DoLaplace(objResampledImage, objLaplaceEdgeImage, objPyrLaplaceDisplay);
-                    }         
-                }                            
-            }
-        }
-
-        private void UpdateImages()
-        {
-            RemoveNoise();
-
-            FindEdges(BLUR);
-            FindEdges(RESAMPLE);
-        }
-
-        private void RemoveNoise()
-        {
-            DoBlur();
-            DoPyr();
-        }
-
-        private void DoBlur()
-        {
-            //if (m_objProcessedImages[BLUR, NO_EDGE] != null) m_objProcessedImages[BLUR, NO_EDGE].Dispose();
-            //Mat oldImage = m_objProcessedImages[BLUR, NO_EDGE];
-
-            if (m_intBlurAperture % 2 != 0)
-            {
-                Mat objBlurredImage = new Mat();
-                m_objProcessedImages[BLUR, NO_EDGE] = objBlurredImage;
-                CvInvoke.MedianBlur(m_objSourceImage, objBlurredImage, m_intBlurAperture);                
-            }
-            else if (m_intBlurAperture == 0)
-            {
-                m_objProcessedImages[BLUR, NO_EDGE] = m_objSourceImage;
-            }
-
-            objBlurDisplay.Image = m_objProcessedImages[BLUR, NO_EDGE].Bitmap;
-            //if (oldImage != null) oldImage.Dispose();
-        }
-
-        private void DoPyr()
-        {
-            //if (m_objProcessedImages[RESAMPLE, NO_EDGE] != null) m_objProcessedImages[RESAMPLE, NO_EDGE].Dispose();
-            //Mat oldImage = m_objProcessedImages[RESAMPLE, NO_EDGE];
-
-            if (m_intPyrRepetitions < 0) return;
-            if (m_intPyrRepetitions == 0)
-            {
-                m_objProcessedImages[RESAMPLE, NO_EDGE] = m_objSourceImage;
-            }
-            else
-            {
-                m_objProcessedImages[RESAMPLE, NO_EDGE] = m_objSourceImage.Clone();
-                for (int i = 0; i < m_intPyrRepetitions; i++)
-                {
-                    CvInvoke.PyrDown(m_objProcessedImages[RESAMPLE, NO_EDGE], m_objProcessedImages[RESAMPLE, NO_EDGE]);
-                }
-                for (int i = 0; i < m_intPyrRepetitions; i++)
-                {
-                    CvInvoke.PyrUp(m_objProcessedImages[RESAMPLE, NO_EDGE], m_objProcessedImages[RESAMPLE, NO_EDGE]);
+                    FindEdges(objResampledImage, RESAMPLE);
                 }
             }
-            objPyrDisplay.Image = m_objProcessedImages[RESAMPLE, NO_EDGE].Bitmap;
-            //if (oldImage != null) oldImage.Dispose();
         }
 
-        private void FindEdges(int intNoiseRemoveIndex)
+        private void FindEdges(Mat objDetailRemovedImage, int intDetailRemoveMethod)
         {
-            if (m_objProcessedImages[intNoiseRemoveIndex, 0] == null) return;
-
-            //DoCanny(intNoiseRemoveIndex);
-            //DoSobel(intNoiseRemoveIndex);
-            //DoLaplace(intNoiseRemoveIndex);
+            DoCanny(objDetailRemovedImage, m_objPictureBoxes[intDetailRemoveMethod, CANNY]);
+            DoSobel(objDetailRemovedImage, m_objPictureBoxes[intDetailRemoveMethod, SOBEL]);
+            DoLaplace(objDetailRemovedImage, m_objPictureBoxes[intDetailRemoveMethod, LAPLACE]);
         }
 
-        private void DoCanny(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
+        private void DoCanny(Mat objSourceImage, PictureBox objOutput)
         {
-            double cannyThreshold = 180.0;
-            double cannyThresholdLinking = 120.0;
-            CvInvoke.Canny(objSourceImage, objResultImage, cannyThreshold, cannyThresholdLinking);
+            using (Mat objCannyImage = new Mat())
+            {
+                double cannyThreshold = 180.0;
+                double cannyThresholdLinking = 120.0;
+                CvInvoke.Canny(objSourceImage, objCannyImage, cannyThreshold, cannyThresholdLinking);
 
-            if (objOutput.Image != null) objOutput.Image.Dispose();
-            objOutput.Image = objResultImage.Bitmap;
+                if (objOutput.Image != null) objOutput.Image.Dispose();
+                objOutput.Image = objCannyImage.Bitmap;
+            }
         }
 
         //Here, src and dst are your image input and output. The argument ddepth allows you to select the depth (type) of the generated output (e.g., CV_32F). As a good example of how to use ddepth, if src is an 8-bit image, then the dst should have a depth of at least CV_16S to avoid overflow. xorder and yorder are the orders of the derivative. Typically, you’ll use 0, 1, or at most 2; a 0 value indicates no derivative in that direction.11 The ksize parameter should be odd and is the width (and the height) of the filter to be used. Currently, aperture sizes up to 31 are supported.12 The scale factor and delta are applied to the derivative before storing in dst. 
-        private void DoSobel(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
+        private void DoSobel(Mat objSourceImage, PictureBox objOutput)
         {
-            int intSobelAperture = (int) numSobelAperture.Value;
-            
-            //TODO: x, y > 0 ignores horizontal/vertical lines, but setting both to 0 throws exception. Why?
-            //TODO: why would I use different x, y here? If I know/expect something about the image?
-            //NOTE: looks like Scharr only works with x,y == 0,1 or 1,0
+            using (Mat objSobelEdgeImage = new Mat())
+            {
+                int intSobelAperture = (int)numSobelAperture.Value;
 
-            CvInvoke.Sobel(objSourceImage, objResultImage, DepthType.Cv16S, 1, 0, intSobelAperture);
+                //TODO: x, y > 0 ignores horizontal/vertical lines, but setting both to 0 throws exception. Why?
+                //TODO: why would I use different x, y here? If I know/expect something about the image?
+                //NOTE: looks like Scharr only works with x,y == 0,1 or 1,0
 
-            if (objOutput.Image != null) objOutput.Image.Dispose();
-            objOutput.Image = objResultImage.Bitmap;
-            
+                CvInvoke.Sobel(objSourceImage, objSobelEdgeImage, DepthType.Cv16S, 1, 0, intSobelAperture);
+
+                if (objOutput.Image != null) objOutput.Image.Dispose();
+                objOutput.Image = objSobelEdgeImage.Bitmap;
+            }
         }
 
-        private void DoLaplace(Mat objSourceImage, Mat objResultImage, PictureBox objOutput)
+        private void DoLaplace(Mat objSourceImage, PictureBox objOutput)
         {
-            CvInvoke.Laplacian(objSourceImage, objResultImage, DepthType.Cv16S);
+            using (Mat objLaplaceEdgeImage = new Mat())
+            {
+                CvInvoke.Laplacian(objSourceImage, objLaplaceEdgeImage, DepthType.Cv16S);
 
-            if (objOutput.Image != null) objOutput.Image.Dispose();
-            objOutput.Image = objResultImage.Bitmap;
+                if (objOutput.Image != null) objOutput.Image.Dispose();
+                objOutput.Image = objLaplaceEdgeImage.Bitmap;
+            }
         }
 
 
