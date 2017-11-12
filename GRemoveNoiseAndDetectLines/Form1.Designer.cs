@@ -45,6 +45,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnShowHough = new System.Windows.Forms.Button();
+            this.btnShowContours = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numAperture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRepetitions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objBlurDisplay)).BeginInit();
@@ -214,11 +215,22 @@
             this.btnShowHough.UseVisualStyleBackColor = true;
             this.btnShowHough.Click += new System.EventHandler(this.btnShowHough_Click);
             // 
+            // btnShowContours
+            // 
+            this.btnShowContours.Location = new System.Drawing.Point(506, 392);
+            this.btnShowContours.Name = "btnShowContours";
+            this.btnShowContours.Size = new System.Drawing.Size(88, 23);
+            this.btnShowContours.TabIndex = 18;
+            this.btnShowContours.Text = "FindCountours";
+            this.btnShowContours.UseVisualStyleBackColor = true;
+            this.btnShowContours.Click += new System.EventHandler(this.btnShowContours_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1822, 813);
+            this.Controls.Add(this.btnShowContours);
             this.Controls.Add(this.btnShowHough);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -274,6 +286,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnShowHough;
+        private System.Windows.Forms.Button btnShowContours;
     }
 }
 

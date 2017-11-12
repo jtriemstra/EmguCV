@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JChainableTransforms", "JCh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAImageViewer", "AAImageViewer\AAImageViewer.csproj", "{6726845D-1921-4D3B-A63B-3DA7A2266BFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KChainableTestRig", "KChainableTestRig\KChainableTestRig.csproj", "{F9458081-56A9-4452-A879-D982CC724B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6726845D-1921-4D3B-A63B-3DA7A2266BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9458081-56A9-4452-A879-D982CC724B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9458081-56A9-4452-A879-D982CC724B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9458081-56A9-4452-A879-D982CC724B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9458081-56A9-4452-A879-D982CC724B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

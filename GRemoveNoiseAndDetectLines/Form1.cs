@@ -11,6 +11,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using Emgu.CV.Util;
 
 namespace GRemoveNoiseAndDetectLines
 {
@@ -186,51 +187,123 @@ namespace GRemoveNoiseAndDetectLines
 
         private void objBlurCannyDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[BLUR, CANNY]);
             DetailView objDetail = new DetailView(objBlurCannyDisplay.Image);
             objDetail.Show();
         }
 
         private void objBlurSobelDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[BLUR, SOBEL]);
             DetailView objDetail = new DetailView(objBlurSobelDisplay.Image);
             objDetail.Show();
         }
 
         private void objBlurLaplaceDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[BLUR, LAPLACE]);
             DetailView objDetail = new DetailView(objBlurLaplaceDisplay.Image);
             objDetail.Show();
         }
 
         private void objPyrCannyDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[RESAMPLE, CANNY]);
             DetailView objDetail = new DetailView(objPyrCannyDisplay.Image);
             objDetail.Show();
         }
 
         private void objPyrSobelDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[RESAMPLE, SOBEL]);
             DetailView objDetail = new DetailView(objPyrSobelDisplay.Image);
             objDetail.Show();
         }
 
         private void objPyrLaplaceDisplay_Click(object sender, EventArgs e)
         {
-            //DetailView objDetail = new DetailView(m_objProcessedImages[RESAMPLE, LAPLACE]);
             DetailView objDetail = new DetailView(objPyrLaplaceDisplay.Image);
             objDetail.Show();
         }
 
+        private void DoHough(Image<Bgr, Byte> objSourceImage)
+        {
+            
+            Mat grayImage = new Mat();
+            CvInvoke.CvtColor(objSourceImage, grayImage, ColorConversion.Bgr2Gray);
+
+            LineSegment2D[] lines = CvInvoke.HoughLinesP(
+                   grayImage,
+                   1, //Distance resolution in pixel-related units
+                   Math.PI / 45.0, //Angle resolution measured in radians.
+                   20, //threshold
+                   30, //min Line width
+                   10); //gap between lines
+
+            Image<Bgr, Byte> lineImage = objSourceImage.CopyBlank();
+            foreach (LineSegment2D line in lines)
+                lineImage.Draw(line, new Bgr(Color.Green), 2);
+            DetailView objDetail = new DetailView(lineImage.Bitmap);
+            objDetail.Show();
+        }
+
+        private void DoContours(Image<Bgr, Byte> objSourceImage)
+        {
+            Mat grayImage = new Mat();
+            CvInvoke.CvtColor(objSourceImage, grayImage, ColorConversion.Bgr2Gray);
+
+            List<RotatedRect> boxList = new List<RotatedRect>(); //a box is a rotated rectangle
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                CvInvoke.FindContours(grayImage, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
+                int count = contours.Size;
+                for (int i = 0; i < count; i++)
+                {
+                    using (VectorOfPoint contour = contours[i])
+                    using (VectorOfPoint approxContour = new VectorOfPoint())
+                    {
+                        CvInvoke.ApproxPolyDP(contour, approxContour, CvInvoke.ArcLength(contour, true) * 0.05, true);
+                        if (CvInvoke.ContourArea(approxContour, false) > 250) //only consider contours with area greater than 250
+                        {
+                            if (approxContour.Size == 4) //The contour has 4 vertices.
+                            {
+                                #region determine if all the angles in the contour are within [80, 100] degree
+                                bool isRectangle = true;
+                                Point[] pts = approxContour.ToArray();
+                                LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
+
+                                /*for (int j = 0; j < edges.Length; j++)
+                                {
+                                    double angle = Math.Abs(
+                                       edges[(j + 1) % edges.Length].GetExteriorAngleDegree(edges[j]));
+                                    if (angle < 80 || angle > 100)
+                                    {
+                                        isRectangle = false;
+                                        break;
+                                    }
+                                }*/
+                                #endregion
+
+                                if (isRectangle) boxList.Add(CvInvoke.MinAreaRect(approxContour));
+                            }
+                        }
+                    }
+                }
+            }
+
+            Image<Bgr, Byte> triangleRectangleImage = objSourceImage.CopyBlank();
+            foreach (RotatedRect box in boxList)
+                triangleRectangleImage.Draw(box, new Bgr(Color.DarkOrange), 2);
+            DetailView objDetail = new DetailView(triangleRectangleImage.Bitmap);
+            objDetail.Show();
+            //ImageViewer.Show(triangleRectangleImage, "Test Window 2");
+        }
 
         private void btnShowHough_Click(object sender, EventArgs e)
         {
-            HoughView objLines = new HoughView(objBlurCannyDisplay.Image);
-            objLines.Show();
+            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurLaplaceDisplay.Image));
+            DoHough(img);
+        }
+
+        private void btnShowContours_Click(object sender, EventArgs e)
+        {
+            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurLaplaceDisplay.Image));
+            DoContours(img);
         }
     }
 }

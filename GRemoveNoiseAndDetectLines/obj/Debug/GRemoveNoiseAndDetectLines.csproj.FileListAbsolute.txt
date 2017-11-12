@@ -37,4 +37,3 @@ C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\bin\Debug\zh-tw\ZedGraph.resou
 C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\obj\Debug\GRemoveNoiseAndDetectLines.exe
 C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\obj\Debug\GRemoveNoiseAndDetectLines.pdb
 C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\obj\Debug\GRemoveNoiseAndDetectLines.DetailView.resources
-C:\TestProjects\EmguCV\GRemoveNoiseAndDetectLines\obj\Debug\GRemoveNoiseAndDetectLines.HoughView.resources
