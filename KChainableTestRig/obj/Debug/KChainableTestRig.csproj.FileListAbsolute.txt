@@ -38,3 +38,4 @@ C:\TestProjects\EmguCV\KChainableTestRig\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\TestProjects\EmguCV\KChainableTestRig\bin\Debug\zh-tw\ZedGraph.resources.dll
 C:\TestProjects\EmguCV\KChainableTestRig\obj\Debug\KChainableTestRig.exe
 C:\TestProjects\EmguCV\KChainableTestRig\obj\Debug\KChainableTestRig.pdb
+C:\TestProjects\EmguCV\KChainableTestRig\obj\Debug\KChainableTestRig.DetailView.resources

@@ -296,13 +296,13 @@ namespace GRemoveNoiseAndDetectLines
 
         private void btnShowHough_Click(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurLaplaceDisplay.Image));
+            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurCannyDisplay.Image));
             DoHough(img);
         }
 
         private void btnShowContours_Click(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurLaplaceDisplay.Image));
+            Image<Bgr, Byte> img = new Image<Bgr, Byte>(new Bitmap(objBlurCannyDisplay.Image));
             DoContours(img);
         }
     }
