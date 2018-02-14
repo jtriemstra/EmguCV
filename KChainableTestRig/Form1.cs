@@ -20,7 +20,8 @@ namespace KChainableTestRig
 {
     public partial class Form1 : Form
     {
-        private const String m_strSourceImageFileName = @"C:\TestProjects\EmguCV\IMG_20180113_152015034.jpg";
+        //private const String m_strSourceImageFileName = @"C:\TestProjects\EmguCV\IMG_20180113_152015034.jpg";
+        private const String m_strSourceImageFileName = @"C:\TestProjects\EmguCV\IMG_20171104_140009649.jpg";
 
         private Mat objSourceImage = new Mat(m_strSourceImageFileName);
 

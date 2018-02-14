@@ -39,7 +39,7 @@ namespace JChainableTransforms
             THRESH_MAX
         }
 
-        public static String[] TransformNames = { "Canny", "Sobel", "Laplace", "Blur", "Pyr", "Grayscale", "AdaptiveThreshold", "StaticThreshold", "To8Bit", "Dilate", "Erode", "Hough", "HoughP" };
+        public static String[] TransformNames = { "Canny", "Sobel", "Laplace", "Blur", "Pyr", "Grayscale", "AdaptiveThreshold", "StaticThreshold", "To8Bit", "Dilate", "Erode", "Hough", "HoughP", "DrawRectangles" };
 
         public static TransformParameter[] GetParameters(String strTransform)
         {
@@ -71,6 +71,8 @@ namespace JChainableTransforms
                     return new TransformParameter[] { new TransformParameter() { Key = ParameterKey.HOUGH_THRESHOLD, Type = ParameterType.INT, IntValue = 20, MinValue = 0, MaxValue = 255 }, new TransformParameter() { Key = ParameterKey.HOUGH_THETA_DEGREES, Type = ParameterType.INT, IntValue = 4, MinValue = 0, MaxValue = 180 }, new TransformParameter() { Key = ParameterKey.HOUGH_TOLERANCE, Type = ParameterType.INT, IntValue = 5, MinValue = 0, MaxValue = 20 }, new TransformParameter() { Key = ParameterKey.HOUGH_MIN_LENGTH, Type = ParameterType.INT, IntValue = 30, MinValue = 0, MaxValue = 300 }, new TransformParameter() { Key = ParameterKey.HOUGH_MAX_LINE_GAP, Type = ParameterType.INT, IntValue = 10, MinValue = 0, MaxValue = 40 } };
                 case "Hough":
                     return new TransformParameter[] { new TransformParameter() { Key = ParameterKey.HOUGH_THRESHOLD, Type = ParameterType.INT, IntValue = 20, MinValue = 0, MaxValue = 255 }, new TransformParameter() { Key = ParameterKey.HOUGH_THETA_DEGREES, Type = ParameterType.INT, IntValue = 4, MinValue = 0, MaxValue = 180 } };
+                case "DrawRectangles":
+                    return new TransformParameter[] { };
                 default:
                     return new TransformParameter[] { };
             }

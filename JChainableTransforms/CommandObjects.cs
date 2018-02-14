@@ -46,6 +46,9 @@ namespace JChainableTransforms
                     return new HoughP();
                 case "Hough":
                     return new Hough();
+                case "DrawRectangles":
+                    return new DrawRectangles();
+
                 default:
                     return null;
             }
@@ -433,6 +436,75 @@ namespace JChainableTransforms
                 Image<Bgr, Byte> lineImage = objConvertedSource.CopyBlank();
                 foreach (LineSegment2D line in lines)
                     lineImage.Draw(line, new Bgr(Color.Green), 2);
+
+                using (Mat objOutput = new Mat(lineImage.Mat, new Rectangle(new Point(0, 0), lineImage.Size)))
+                {
+                    if (Next != null) Next.Execute(objOutput);
+                }
+            }
+        }
+
+        public class DrawRectangles : Transform
+        {
+            public DrawRectangles()
+            {
+                Parameters = new Dictionary<ParameterKey, object>();
+                
+            }
+
+            public override void Execute(Mat objSourceImage)
+            {
+                List<RotatedRect> boxList = new List<RotatedRect>(); //a box is a rotated rectangle
+
+                using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+                {
+                    CvInvoke.FindContours(objSourceImage, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
+                    int count = contours.Size;
+                    int countPolys = 0;
+                    int countQuads = 0;
+                    int countRects = 0;
+                    for (int i = 0; i < count; i++)
+                    {
+                        using (VectorOfPoint contour = contours[i])
+                        using (VectorOfPoint approxContour = new VectorOfPoint())
+                        {
+                            CvInvoke.ApproxPolyDP(contour, approxContour, CvInvoke.ArcLength(contour, true) * 0.05, true);
+                            if (CvInvoke.ContourArea(approxContour, false) > 250) //only consider contours with area greater than 250
+                            {
+                                countPolys++;
+                                if (approxContour.Size == 4) //The contour has 4 vertices.
+                                {
+                                    countQuads++;
+                                    #region determine if all the angles in the contour are within [80, 100] degree
+                                    bool isRectangle = true;
+                                    Point[] pts = approxContour.ToArray();
+                                    LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
+
+                                    for (int j = 0; j < edges.Length; j++)
+                                    {
+                                        double angle = Math.Abs(
+                                           edges[(j + 1) % edges.Length].GetExteriorAngleDegree(edges[j]));
+                                        if (angle < 80 || angle > 100)
+                                        {
+                                            isRectangle = false;
+                                            break;
+                                        }
+                                        countRects++;
+                                    }
+                                    #endregion
+
+                                    if (isRectangle) boxList.Add(CvInvoke.MinAreaRect(approxContour));
+                                }
+                            }
+                            
+                        }
+                    }
+                    int x = 0;
+                }
+
+                Image<Bgr, Byte> lineImage = objSourceImage.ToImage<Bgr, Byte>().CopyBlank();
+                foreach (RotatedRect box in boxList)
+                    lineImage.Draw(box, new Bgr(Color.DarkOrange), 2);
 
                 using (Mat objOutput = new Mat(lineImage.Mat, new Rectangle(new Point(0, 0), lineImage.Size)))
                 {

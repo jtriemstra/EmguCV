@@ -21,7 +21,7 @@ namespace DShapeDetection
         static void Main(string[] args)
         {
             StringBuilder msgBuilder = new StringBuilder("Performance: ");
-            String strFileName = @"c:\users\jtriemstra\desktop\400x300.jpg";
+            String strFileName = @"C:\TestProjects\EmguCV\DShapeDetection\Opencvpic3sample.png";
 
             //Load the image from file and resize it for display
             Image<Bgr, Byte> img =

@@ -2,12 +2,10 @@ C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\DShapeDetection.exe.config
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\concrt140.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\cvextern.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\msvcp140.dll
-C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\opencv_ffmpeg320_64.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\vcruntime140.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\concrt140.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\cvextern.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\msvcp140.dll
-C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\opencv_ffmpeg320.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\vcruntime140.dll
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\DShapeDetection.exe
 C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\DShapeDetection.pdb
@@ -33,3 +31,5 @@ C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\zh-tw\ZedGraph.resources.dll
 C:\TestProjects\EmguCV\DShapeDetection\obj\Debug\DShapeDetection.csprojResolveAssemblyReference.cache
 C:\TestProjects\EmguCV\DShapeDetection\obj\Debug\DShapeDetection.exe
 C:\TestProjects\EmguCV\DShapeDetection\obj\Debug\DShapeDetection.pdb
+C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x64\opencv_ffmpeg330_64.dll
+C:\TestProjects\EmguCV\DShapeDetection\bin\Debug\x86\opencv_ffmpeg330.dll
